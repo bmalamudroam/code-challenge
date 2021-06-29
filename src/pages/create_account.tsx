@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { FormEvent } from 'react';
+// import Logo from 'images/wealthfrontlogo.png';
 import styles from 'src/styles/create_account.module.scss';
 
 export default function CreateAccount() {
@@ -19,7 +20,25 @@ export default function CreateAccount() {
         <title>Create Account</title>
       </Head>
       <article className={styles.article}>
+        <header>
+          <img src="images/wealthfrontlogo.png"/>
+          <h1>Create Account</h1>
+        </header>
         <form className={styles.form} onSubmit={handleSubmit}>
+          <section>
+            <h2>Username</h2>
+            <input type="text"/>
+            <small>
+              USERNAME RULES
+            </small>
+          </section>
+          <section>
+            <h2>Password</h2>
+            <input type="text"/>
+            <small>
+              PASSWORD RULES
+            </small>
+          </section>
           <button>Create Account</button>
         </form>
       </article>
