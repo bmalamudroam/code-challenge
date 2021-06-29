@@ -26,3 +26,25 @@ export default function CreateAccount() {
     </>
   );
 }
+
+/*
+  <article (page wrapper) flex col>
+    <header>
+      <Logo (img tag)/>
+      <h1>Create Account<h1>
+    <header/>
+    <form>
+      <UsernameInput (either p or section)>
+        <h2>Username<h2>
+        <text input />
+        <username rules (small) />
+      <UsernameInput />
+      <PasswordInput (either p or section)>
+        <h2>Password<h2>
+        <text input>
+        <password rules (small) />
+      <PasswordInput/>
+      <SubmitBtn />
+    <form/>
+  <article/>
+*/
