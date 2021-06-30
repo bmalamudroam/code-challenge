@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, FormEvent } from 'react';
 import styles from 'src/styles/create_account.module.scss';
 
 // import ReactDOM from 'react-dom';
@@ -20,12 +20,12 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
   }
 
-  handleInputFieldSelection(event) {
+  handleInputFieldSelection(event: FormEvent) {
     event.preventDefault();
     this.setState({ selected: event.target.name })
   }
 
-  togglePasswordVisibility(event) {
+  togglePasswordVisibility(event: FormEvent) {
     event.preventDefault();
     let { hidePass } = this.state;
     hidePass = !hidePass;
@@ -34,14 +34,28 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
 
   render () {
     let { selected, hidePass } = this.state;
-    let passwordVisibility = hidePass ? 'Show' : 'Hide'
+    let passwordVisibility = hidePass ? 'Show' : 'Hide';
     return (
       <form className={`CreateAccountForm ${styles.form}`}>
         <CreateAccountHeader />
-        <InputSection field="Username" showRules={selected === 'Username'} handleSelect={this.handleInputFieldSelection}/>
-        <InputSection field="Password" showRules={selected === 'Password'} handleSelect={this.handleInputFieldSelection} hidePass={hidePass}/>
-        <button onClick={this.togglePasswordVisibility}>{passwordVisibility} Password</button>
-        <button>Create Account</button>
+        <InputSection
+          field="Username"
+          showRules={selected === 'Username'}
+          handleSelect={this.handleInputFieldSelection}
+          hidePass={hidePass}
+        />
+        <InputSection
+          field="Password"
+          showRules={selected === 'Password'}
+          handleSelect={this.handleInputFieldSelection}
+          hidePass={hidePass}
+        />
+        <button onClick={this.togglePasswordVisibility}>
+          {passwordVisibility} Password
+        </button>
+        <button>
+          Create Account
+        </button>
       </form>
     )
   }

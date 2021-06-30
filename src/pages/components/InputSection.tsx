@@ -10,18 +10,28 @@ const InputSection = ({ field, showRules, handleSelect, hidePass }) => {
       <h2 className={styles.field_title}>
         {field}
       </h2>
-      <input name={field} type={inputType} className={styles.text_input}  onClick={handleSelect}/>
-      {/* <small>
-        {field} RULES
-      </small> */}
+      <input
+        name={field}
+        type={inputType}
+        className={styles.text_input}
+        onClick={handleSelect}
+        autoComplete="off"
+      />
       {rules}
     </section>
   );
 };
 
 const RulesBox = ({ field }) => {
-  const passwordRules = ['between 20 and 50 characters', 'at least 1 Symbol (!,@,#,$,%)', 'at least 1 letter (upper or lower case)', 'at least 1 number (0-9)'];
-  const usernameRules = ['between 10 and 50 characters'];
+  const passwordRules = [
+    'between 20 and 50 characters',
+    'at least 1 Symbol (!,@,#,$,%)',
+    'at least 1 letter (upper or lower case)',
+    'at least 1 number (0-9)'
+  ];
+  const usernameRules = [
+    'between 10 and 50 characters'
+  ];
   const rules = (field === 'Username') ? usernameRules : passwordRules;
   return (
     <div className={styles.rules}>
