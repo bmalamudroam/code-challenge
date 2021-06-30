@@ -2,6 +2,10 @@ import Head from 'next/head';
 import { FormEvent } from 'react';
 // import Logo from 'images/wealthfrontlogo.png';
 import styles from 'src/styles/create_account.module.scss';
+import InputSection from './components/InputSection';
+import CreateAccountHeader from './components/CreateAccountHeader';
+import CreateAccountForm from './components/_CreateAccountForm';
+
 
 export default function CreateAccount() {
   async function handleSubmit(evt: FormEvent) {
@@ -20,33 +24,7 @@ export default function CreateAccount() {
         <title>Create Account</title>
       </Head>
       <article className={styles.article}>
-        <header className={styles.headline}>
-          <img src="images/wealthfrontlogo.png" className={styles.logo}/>
-          <h1 className={styles.title}>
-            Create New Account
-          </h1>
-        </header>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <section className={styles.username}>
-            <h2 className={styles.field_title}>
-              Username
-            </h2>
-            <input type="text" className={styles.text_input}/>
-            <small>
-              USERNAME RULES
-            </small>
-          </section>
-          <section className={styles.password}>
-            <h2 className={styles.field_title}>
-              Password
-            </h2>
-            <input type="text" className={styles.text_input}/>
-            <small>
-              PASSWORD RULES
-            </small>
-          </section>
-          <button>Create Account</button>
-        </form>
+        <CreateAccountForm />
       </article>
     </>
   );

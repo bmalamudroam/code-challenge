@@ -34,11 +34,14 @@
 .title {
   margin: 0;
   font-size: 2em;
+  font-family: 'Arial Narrow Bold', sans-serif;
 }
 
 .field_title {
   font-size: .9em;
+  font-weight: 300;
   color: gray;
+  // font-family: 'Arial Narrow Bold', sans-serif;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -47,12 +50,20 @@
   border-bottom: 1px solid rgb(211, 211, 211);
 }
 
-.username {
+// .username {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .password {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+//maybe rename to form_section
+.password, .username {
   display: flex;
   flex-direction: column;
+  padding: .5em;
 }
 
-.password {
-  display: flex;
-  flex-direction: column;
-}
