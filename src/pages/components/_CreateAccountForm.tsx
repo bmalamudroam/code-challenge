@@ -10,8 +10,8 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
   constructor(props) {
     super(props);
     this.state = {
-      Username: '',
-      Password: '',
+      username: '',
+      password: '',
       selected: '',
       hidePass: true
     }
@@ -31,9 +31,8 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     const field = event.target.name;
     const { value } = event.target;
     this.setState(state => {
-      state[field] = value;
+      state[field.toLowerCase()] = value;
     });
-    console.log(this.state.Username);
   }
 
   togglePasswordVisibility(event: FormEvent) {
@@ -41,6 +40,27 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     let { hidePass } = this.state;
     hidePass = !hidePass;
     this.setState({ hidePass });
+  }
+
+  async handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const { username, password} = this.state;
+    //validate username
+    if (!isValidUsername(username)) {
+
+    }
+    //validate password
+    if (!isValidPassword(password)) {
+
+    }
+    //check for exposed password
+    //if none of the above had issue, post new account
+    const response = await fetch('/api/create_new_account', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
+
+    console.log(await response.json());
   }
 
   render () {
@@ -72,4 +92,43 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
       </form>
     )
   }
+}
+
+
+//HELPER FUNCTIONS (edit these to adjust validation requirements)
+function isValidUsername(username: string) {
+  return (username.length >= 10 && username.length <= 50);
+}
+
+//test these functions
+function isValidPassword(password: string) {
+  if (password.length < 20 || password.length > 50) return false;
+  let hasSymbol = false;
+  let hasLetter = false;
+  let hasNum = false;
+  for (let i = 0; i < password.length; i++) {
+    let currentChar = password[i];
+    if(!hasSymbol && isSymbol(currentChar)) hasSymbol = true;
+    if(!hasLetter && isLetter(currentChar)) hasLetter = true;
+    if(!hasNum && isNum(currentChar)) hasNum = true;
+    if (hasSymbol && hasLetter && hasNum) return true;
+  }
+  return false;
+}
+
+// async function isExposedPassword()
+
+function isLetter(char: string) {
+  const charCode = char.charCodeAt(0);
+  return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
+}
+
+function isNum(char: string) {
+  const charCode = char.charCodeAt(0);
+  return (charCode >= 48 && charCode <= 57);
+}
+
+function isSymbol(char: string) {
+  const symbols = [`!`, `@`, `#`, `$`, `%`];
+  return (symbols.indexOf(char) !== -1);
 }
