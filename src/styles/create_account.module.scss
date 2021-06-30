@@ -47,9 +47,20 @@
 
 .text_input {
   border: none;
+  outline: none;
+  height: 2em;
   border-bottom: 1px solid rgb(211, 211, 211);
+  padding-left: .5em;
+}
+.text_input:hover {
+  transition: 250ms;
+  background-color: rgb(231, 231, 231);
 }
 
+.text_input:focus {
+  caret-color: rgb(68, 72, 174);
+  background-color: rgb(231, 231, 231);
+}
 // .username {
 //   display: flex;
 //   flex-direction: column;
@@ -68,7 +79,8 @@
 }
 
 .rules {
-  border: 1px solid green;
+  border: 1px solid rgb(68, 72, 174);
+  border-radius: 5px;
   margin-top: .5em;
   padding: .5em;
 }
