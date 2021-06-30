@@ -40,6 +40,7 @@ function isValidUsername(username: string) {
   return (username.length >= 10 && username.length <= 50);
 }
 
+//test these functions
 function isValidPassword(password: string) {
   if (password.length < 20 || password.length > 50) return false;
   let hasSymbol = false;

@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import styles from 'src/styles/create_account.module.scss';
 
-const InputSection = ({ field, showRules, handleSelect, hidePass }) => {
+const InputSection = ({ field, showRules, handleSelect, handleInput, hidePass }) => {
   let rules = showRules ? <RulesBox field={field}/> : <div />;
   let inputType = (field === 'Username' || hidePass === false) ? "text" : "password";
   console.log(hidePass);
@@ -15,6 +15,7 @@ const InputSection = ({ field, showRules, handleSelect, hidePass }) => {
         type={inputType}
         className={styles.text_input}
         onClick={handleSelect}
+        onChange={handleInput}
         autoComplete="off"
       />
       {rules}
