@@ -1,14 +1,16 @@
 import { Component } from 'react';
 import styles from 'src/styles/create_account.module.scss';
 
-const InputSection = ({ field, showRules, handleSelect }) => {
-  let rules = showRules ? <RulesBox field={field}/> : <div />
+const InputSection = ({ field, showRules, handleSelect, hidePass }) => {
+  let rules = showRules ? <RulesBox field={field}/> : <div />;
+  let inputType = (field === 'Username' || hidePass === false) ? "text" : "password";
+  console.log(hidePass);
   return (
     <section className={styles.username}>
       <h2 className={styles.field_title}>
         {field}
       </h2>
-      <input name={field} type="text" className={styles.text_input}  onClick={handleSelect}/>
+      <input name={field} type={inputType} className={styles.text_input}  onClick={handleSelect}/>
       {/* <small>
         {field} RULES
       </small> */}
