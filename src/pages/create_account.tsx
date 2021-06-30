@@ -20,21 +20,27 @@ export default function CreateAccount() {
         <title>Create Account</title>
       </Head>
       <article className={styles.article}>
-        <header>
-          <img src="images/wealthfrontlogo.png"/>
-          <h1>Create Account</h1>
+        <header className={styles.headline}>
+          <img src="images/wealthfrontlogo.png" className={styles.logo}/>
+          <h1 className={styles.title}>
+            Create New Account
+          </h1>
         </header>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <section>
-            <h2>Username</h2>
-            <input type="text"/>
+          <section className={styles.username}>
+            <h2 className={styles.field_title}>
+              Username
+            </h2>
+            <input type="text" className={styles.text_input}/>
             <small>
               USERNAME RULES
             </small>
           </section>
-          <section>
-            <h2>Password</h2>
-            <input type="text"/>
+          <section className={styles.password}>
+            <h2 className={styles.field_title}>
+              Password
+            </h2>
+            <input type="text" className={styles.text_input}/>
             <small>
               PASSWORD RULES
             </small>
