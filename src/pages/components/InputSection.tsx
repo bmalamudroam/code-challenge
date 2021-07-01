@@ -36,21 +36,28 @@ const RulesBox = ({ field }) => {
   return (
     <div className={styles.rules}>
       <small>
-        Must contain:
         <RulesList rules={rules} field={field}/>
       </small>
     </div>
   )
 };
 
-const RulesList = ({ field, rules }) => (
-  <ul>
-    {rules.map((rule, index) => (
-      <li key={`${field}${index}`}>
-        {rule}
-      </li>
-    ))}
-  </ul>
-)
+const RulesList = ({ field, rules }) => {
+  const usernameMessage = 'Use between 10 and 50 characters';
+  const passwordMessage = 'Use between 20 and 50 characters and at least 1 letter, number & symbol';
+  const message: string = (field === 'Username') ? usernameMessage : passwordMessage;
+  return (
+    <small>
+      {message}
+    </small>
+  )
+}
+  // <ul>
+  //   {rules.map((rule, index) => (
+  //     <li key={`${field}${index}`}>
+  //       {rule}
+  //     </li>
+  //   ))}
+  // </ul>
 
 export default InputSection;

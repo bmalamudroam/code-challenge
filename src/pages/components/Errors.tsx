@@ -24,15 +24,26 @@ const Errors = ({ validationErrors }) => {
   } else {
     usernameErrorList = <ErrorList errors={usernameErrors} field="username"/>
   }
+  let display = <div />;
+  if (usernameErrors.length + passwordErrors.length !== 0) {
+    display = <ErrorDisplay usernameErrorList={usernameErrorList} passwordErrorList={passwordErrorList} />
+  }
   return (
-    <div /*className={styles.errors} */>
-      <small>
-        {usernameErrorList}
-        {passwordErrorList}
-      </small>
-    </div>
+    <>
+      {display}
+    </>
   )
 };
+
+const ErrorDisplay = ({usernameErrorList, passwordErrorList }) => (
+  <section className={styles.errors}>
+    <small>
+      <h2>Invalid password or username</h2>
+      {usernameErrorList}
+      {passwordErrorList}
+    </small>
+  </section>
+)
 
 const ErrorList = ({ field, errors }) => (
   <>
