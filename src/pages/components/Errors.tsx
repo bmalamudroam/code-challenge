@@ -48,7 +48,7 @@ const ErrorDisplay = ({usernameErrorList, passwordErrorList }) => (
 const ErrorList = ({ field, errors }) => (
   <>
     <h3>
-      Please provide a {field} which contains:
+      Must contain
     </h3>
     <ul>
       {errors.map((error, index) => (

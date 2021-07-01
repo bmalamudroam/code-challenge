@@ -94,7 +94,7 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
         <button onClick={this.togglePasswordVisibility}>
           {passwordVisibility} Password
         </button>
-        <button type="submit">
+        <button type="submit" className={styles.submit_button}>
           Create Account
         </button>
       </form>

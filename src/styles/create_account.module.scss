@@ -57,7 +57,7 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   // padding-left: .5em;
 }
 .text_input:hover {
-  transition: 250ms;
+  transition: 200ms;
   background-color: rgb(231, 231, 231);
 }
 
@@ -84,17 +84,6 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   // border: 1px solid black;
 }
 
-// .rules {
-//   // position: fixed;
-//   // top: 100%;
-//   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-//   // border: 1px solid rgb(68, 72, 174);
-//   background-color:rgba(68, 72, 174, 0.2);
-//   border-radius: 16px;
-//   margin-top: .5em;
-//   padding: .5em;
-//   // text-align: center;
-// }
 .rules {
   color: gray;
   font-family: $font;
@@ -108,10 +97,6 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
 .errors, .rules {
   position: absolute;
   top: 5em;
-  // margin: 1em 0;
-  // padding: .75em;
-  // border-radius: 16px;
-  // text-align: center;
 }
 .errors ul, .rules ul{
   list-style-type: circle;
@@ -120,4 +105,24 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   margin: 0.55em;
   // list-style-position: inside;
 }
+
+.submit_button {
+  outline: none;
+  // border: 1px outset rgba(68, 72, 174, 0.95);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  height: 3em;
+  background-color:rgba(68, 72, 174, 0.95);
+}
+
+.submit_button:hover {
+  background-color: rgba(68, 72, 174, 1);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.3);
+}
+
+.submit_button:active {
+  background-color: rgba(68, 72, 174, .9);
+}
+
 
