@@ -5,14 +5,24 @@ interface CreateNewAccountParameters {
   password: string;
 }
 
-interface BooleanResult {
+type InvalidField = "Username" | "Password";
+type ValidationCriteria = "Length" | "Symbol" | "Letter" | "Number";
+
+interface CreateNewAccountResult {
   result: boolean;
-  errors?: Record<string, string>;
+  //example errors: { Username: ["Length"], Password: ["Symbol"]}
+  //this would indicate the username is not a valid length and the password is invalid due to a missing symbol
+  errors?: Record<InvalidField, Array<ValidationCriteria>>;
 }
 
-export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<BooleanResult>) {
-  const { username, password } = JSON.parse(req.body);
-  console.log(username, password);
+export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<CreateNewAccountResult>) {
+  const accountParams: CreateNewAccountParameters = JSON.parse(req.body);
+  const usernameIssues: Array<ValidationCriteria> = [];
+  const passwordIssues: Array<ValidationCriteria> = [];
+  //if username is invalid, tell client
+  //if password is invalid, tell client
+  //if password is exposed, tell client
+  //otherwise send client success
   res.status(200).json({ result: true });
 }
 
@@ -22,19 +32,31 @@ function isValidUsername(username: string) {
 }
 
 //test these functions
+//takes in a password to test
+//outputs an array of all incomplete criteria (ex. ['Length', 'Symbol'])
 function isValidPassword(password: string) {
-  if (password.length < 20 || password.length > 50) return false;
-  let hasSymbol = false;
-  let hasLetter = false;
-  let hasNum = false;
+  let hasSymbol: boolean = false;
+  let hasLetter: boolean = false;
+  let hasNumber: boolean = false;
+  let result: Array<ValidationCriteria> = [];
+  if (password.length < 20 || password.length > 50) result.push('Length');
   for (let i = 0; i < password.length; i++) {
     let currentChar = password[i];
     if(!hasSymbol && isSymbol(currentChar)) hasSymbol = true;
     if(!hasLetter && isLetter(currentChar)) hasLetter = true;
-    if(!hasNum && isNum(currentChar)) hasNum = true;
-    if (hasSymbol && hasLetter && hasNum) return true;
+    if(!hasNumber && isNum(currentChar)) hasNumber = true;
+    if (hasSymbol && hasLetter && hasNumber) return true;
   }
-  return false;
+  if (!hasSymbol) {
+    result.push('Symbol');
+  }
+  if (!hasLetter) {
+    result.push('Letter');
+  }
+  if (!hasNumber) {
+    result.push('Number');
+  }
+  return result;
 }
 
 // async function isExposedPassword()
