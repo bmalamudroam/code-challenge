@@ -7,12 +7,13 @@ interface CreateNewAccountParameters {
 
 type InvalidField = "username" | "password";
 type ValidationCriteria = "Length" | "Symbol" | "Letter" | "Number";
+export type ValidationErrors = Record<InvalidField, Array<ValidationCriteria>>;
 
 interface CreateNewAccountResult {
   result: boolean;
   //example errors: { Username: ["Length"], Password: ["Symbol"]}
   //this would indicate the username is not a valid length and the password is invalid due to a missing symbol
-  errors?: Record<InvalidField, Array<ValidationCriteria>>;
+  errors?: ValidationErrors;
 }
 
 export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<CreateNewAccountResult>) {

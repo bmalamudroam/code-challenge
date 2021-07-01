@@ -4,16 +4,21 @@ import styles from 'src/styles/create_account.module.scss';
 // import ReactDOM from 'react-dom';
 import CreateAccountHeader from './CreateAccountHeader';
 import InputSection from './InputSection';
+import Errors from './Errors';
+import { ValidationErrors } from '../api/create_new_account'
 
-
-export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean}> {
+export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean, validationErrors: ValidationErrors}> {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
       selected: '',
-      hidePass: true
+      hidePass: true,
+      validationErrors: {
+        password: [],
+        username: []
+      },
     }
     this.setState = this.setState.bind(this);
     this.handleInputFieldSelection = this.handleInputFieldSelection.bind(this);
@@ -51,15 +56,27 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
       body: JSON.stringify({ username, password }),
     });
 
-    console.log(await response.json());
+    const { result, errors } = await response.json();
+    if (result) {
+      //success screen
+    } else {
+      this.displayInvalidCriteria(errors);
+    }
+  }
+
+  displayInvalidCriteria(errors: ValidationErrors) {
+    // const passwordErrors: Array<string> = errors.password;
+    // const usernameErrors: Array<string> = errors.username;
+    this.setState({ validationErrors: errors });
   }
 
   render () {
-    let { selected, hidePass } = this.state;
+    let { selected, hidePass, validationErrors } = this.state;
     let passwordVisibility = hidePass ? 'Show' : 'Hide';
     return (
       <form className={`CreateAccountForm ${styles.form}`} onSubmit={this.handleSubmit}>
         <CreateAccountHeader />
+        <Errors validationErrors={validationErrors}/>
         <InputSection
           field="Username"
           showRules={selected === 'Username'}
