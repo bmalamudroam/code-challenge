@@ -19,6 +19,7 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     this.handleInputFieldSelection = this.handleInputFieldSelection.bind(this);
     this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputFieldSelection(event: FormEvent) {
@@ -45,19 +46,9 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
   async handleSubmit(event: FormEvent) {
     event.preventDefault();
     const { username, password} = this.state;
-    //validate username
-    if (!isValidUsername(username)) {
-
-    }
-    //validate password
-    if (!isValidPassword(password)) {
-
-    }
-    //check for exposed password
-    //if none of the above had issue, post new account
     const response = await fetch('/api/create_new_account', {
       method: 'POST',
-      body: JSON.stringify({}),
+      body: JSON.stringify({ username, password }),
     });
 
     console.log(await response.json());
@@ -67,7 +58,7 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     let { selected, hidePass } = this.state;
     let passwordVisibility = hidePass ? 'Show' : 'Hide';
     return (
-      <form className={`CreateAccountForm ${styles.form}`}>
+      <form className={`CreateAccountForm ${styles.form}`} onSubmit={this.handleSubmit}>
         <CreateAccountHeader />
         <InputSection
           field="Username"
@@ -86,7 +77,7 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
         <button onClick={this.togglePasswordVisibility}>
           {passwordVisibility} Password
         </button>
-        <button>
+        <button type="submit">
           Create Account
         </button>
       </form>
@@ -95,40 +86,3 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
 }
 
 
-//HELPER FUNCTIONS (edit these to adjust validation requirements)
-function isValidUsername(username: string) {
-  return (username.length >= 10 && username.length <= 50);
-}
-
-//test these functions
-function isValidPassword(password: string) {
-  if (password.length < 20 || password.length > 50) return false;
-  let hasSymbol = false;
-  let hasLetter = false;
-  let hasNum = false;
-  for (let i = 0; i < password.length; i++) {
-    let currentChar = password[i];
-    if(!hasSymbol && isSymbol(currentChar)) hasSymbol = true;
-    if(!hasLetter && isLetter(currentChar)) hasLetter = true;
-    if(!hasNum && isNum(currentChar)) hasNum = true;
-    if (hasSymbol && hasLetter && hasNum) return true;
-  }
-  return false;
-}
-
-// async function isExposedPassword()
-
-function isLetter(char: string) {
-  const charCode = char.charCodeAt(0);
-  return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
-}
-
-function isNum(char: string) {
-  const charCode = char.charCodeAt(0);
-  return (charCode >= 48 && charCode <= 57);
-}
-
-function isSymbol(char: string) {
-  const symbols = [`!`, `@`, `#`, `$`, `%`];
-  return (symbols.indexOf(char) !== -1);
-}
