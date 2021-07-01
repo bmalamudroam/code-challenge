@@ -5,7 +5,7 @@ interface CreateNewAccountParameters {
   password: string;
 }
 
-type InvalidField = "Username" | "Password";
+type InvalidField = "username" | "password";
 type ValidationCriteria = "Length" | "Symbol" | "Letter" | "Number";
 
 interface CreateNewAccountResult {
@@ -17,24 +17,29 @@ interface CreateNewAccountResult {
 
 export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<CreateNewAccountResult>) {
   const accountParams: CreateNewAccountParameters = JSON.parse(req.body);
-  const usernameIssues: Array<ValidationCriteria> = [];
-  const passwordIssues: Array<ValidationCriteria> = [];
-  //if username is invalid, tell client
-  //if password is invalid, tell client
-  //if password is exposed, tell client
-  //otherwise send client success
-  res.status(200).json({ result: true });
+  const usernameIssues: Array<ValidationCriteria> = isValidUsername(accountParams.username);
+  const passwordIssues: Array<ValidationCriteria> = isValidPassword(accountParams.password);
+  const validationResult: CreateNewAccountResult = {
+    result: (usernameIssues.length + passwordIssues.length === 0),
+  };
+  if(usernameIssues.length + passwordIssues.length !== 0) {
+    validationResult.errors = {
+      username: usernameIssues,
+      password: passwordIssues
+    }
+  }
+  res.status(200).json(validationResult);
 }
 
 //HELPER FUNCTIONS (edit these to adjust validation requirements)
-function isValidUsername(username: string) {
-  return (username.length >= 10 && username.length <= 50);
+function isValidUsername(username: string): Array<ValidationCriteria> {
+  return (username.length >= 10 && username.length <= 50) ? [] : ["Length"];
 }
 
 //test these functions
 //takes in a password to test
 //outputs an array of all incomplete criteria (ex. ['Length', 'Symbol'])
-function isValidPassword(password: string) {
+function isValidPassword(password: string): Array<ValidationCriteria> {
   let hasSymbol: boolean = false;
   let hasLetter: boolean = false;
   let hasNumber: boolean = false;
@@ -45,7 +50,7 @@ function isValidPassword(password: string) {
     if(!hasSymbol && isSymbol(currentChar)) hasSymbol = true;
     if(!hasLetter && isLetter(currentChar)) hasLetter = true;
     if(!hasNumber && isNum(currentChar)) hasNumber = true;
-    if (hasSymbol && hasLetter && hasNumber) return true;
+    if (hasSymbol && hasLetter && hasNumber) break;
   }
   if (!hasSymbol) {
     result.push('Symbol');
