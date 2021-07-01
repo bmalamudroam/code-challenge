@@ -91,8 +91,11 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
           handleInput={this.handleInput}
           hidePass={hidePass}
         />
-        <button onClick={this.togglePasswordVisibility}>
-          {passwordVisibility} Password
+        <button
+          onClick={this.togglePasswordVisibility}
+          className={styles.hide_show_button}
+        >
+          {passwordVisibility}
         </button>
         <button type="submit" className={styles.submit_button}>
           Create Account

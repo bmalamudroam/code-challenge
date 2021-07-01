@@ -16,6 +16,7 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
   width: 350px;
   height: fit-content;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
@@ -125,4 +126,13 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   background-color: rgba(68, 72, 174, .9);
 }
 
+.hide_show_button {
+  background: none;
+  border: none;
+  position: absolute;
+  bottom: 33%;
+  right: 5.5%;
+  color: rgb(68, 72, 174);
+  font-family: $font;
+}
 
