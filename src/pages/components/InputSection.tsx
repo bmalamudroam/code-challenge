@@ -21,7 +21,7 @@ const InputSection = ({ field, showRules, handleSelect, handleInput, hidePass, v
         name={field}
         type={inputType}
         className={textBoxStyle}
-        onClick={handleSelect}
+        onSelect={handleSelect}
         onChange={handleInput}
         autoComplete="off"
       />
