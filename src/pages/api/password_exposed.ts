@@ -15,7 +15,6 @@ interface BooleanResult {
  */
 export default function passwordExposed(req: NextApiRequest, res: NextApiResponse<BooleanResult>) {
   const { password }: PasswordExposedParameters = JSON.parse(req.body);
-
   if (password === 'weakpass') {
     res.status(200).json({ result: true });
   } else {

@@ -4,7 +4,7 @@ import styles from 'src/styles/create_account.module.scss';
 // import ReactDOM from 'react-dom';
 import CreateAccountHeader from './CreateAccountHeader';
 import InputSection from './InputSection';
-import Errors from './Errors';
+// import Errors from './Errors';
 import { ValidationErrors } from '../api/create_new_account'
 
 export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean, validationErrors: ValidationErrors}> {

@@ -16,7 +16,7 @@ interface CreateNewAccountResult {
   errors?: ValidationErrors;
 }
 
-export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<CreateNewAccountResult>) {
+export default async function createNewAccount(req: NextApiRequest, res: NextApiResponse<CreateNewAccountResult>) {
   const accountParams: CreateNewAccountParameters = JSON.parse(req.body);
   const usernameIssues: Array<ValidationCriteria> = isValidUsername(accountParams.username);
   const passwordIssues: Array<ValidationCriteria> = isValidPassword(accountParams.password);
@@ -29,6 +29,12 @@ export default function createNewAccount(req: NextApiRequest, res: NextApiRespon
       password: passwordIssues
     }
   }
+    const response = await fetch('http://localhost:3000/api/password_exposed', {
+      method: 'POST',
+      body: JSON.stringify({ password: accountParams.password }),
+    });
+
+  console.log((await response.json()));
   res.status(200).json(validationResult);
 }
 
