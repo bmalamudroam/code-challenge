@@ -81,15 +81,6 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   caret-color: rgb(68, 72, 174);
   background-color: rgb(231, 231, 231);
 }
-// .username {
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .password {
-//   display: flex;
-//   flex-direction: column;
-// }
 
 //maybe rename to form_section
 /*.password, .username,*/ .valid_input_section, .invalid_input_section {
@@ -162,3 +153,16 @@ $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Ar
   font-family: $font;
 }
 
+.success_display {
+  height: 200px;
+  font-family: $font;
+  font-size: large;
+  line-height: 2em;
+  text-align: center;
+}
+
+.username_display {
+  color: green;
+  font-family: $font;
+  font-weight: 800;
+}

@@ -4,14 +4,14 @@ import styles from 'src/styles/create_account.module.scss';
 // import ReactDOM from 'react-dom';
 import CreateAccountHeader from './CreateAccountHeader';
 import InputSection from './InputSection';
-// import Errors from './Errors';
+import SuccessScreen from './SuccessScreen';
 import { ValidationErrors } from '../api/create_new_account'
 
-export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean, validationErrors: ValidationErrors}> {
+export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean, validationErrors: ValidationErrors, successfullyCreated: boolean}> {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      username: 'TEST',
       password: '',
       selected: '',
       hidePass: true,
@@ -19,6 +19,7 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
         password: [],
         username: []
       },
+      successfullyCreated: true,
     }
     this.setState = this.setState.bind(this);
     this.handleInputFieldSelection = this.handleInputFieldSelection.bind(this);
@@ -60,7 +61,6 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     // response = await response.json();
     const responseData = await response.json();
     //result is a boolean which indicates if account creation is valid
-    // const { result, exposed } = responseData;
     if (responseData.exposed) {
       const alertMessage = 'Your password is exposed';
       alert(alertMessage);
@@ -80,13 +80,24 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
   }
 
   render () {
-    let { selected, hidePass, validationErrors } = this.state;
-    let passwordVisibility = hidePass ? 'Show' : 'Hide';
+    const { selected, hidePass, validationErrors, successfullyCreated, username } = this.state;
+    const passwordVisibility = hidePass ? 'Show' : 'Hide';
+    const formView = <InputArea
+                      selected={selected}
+                      hidePass={hidePass}
+                      validationErrors={validationErrors}
+                      handleInput={this.handleInput}
+                      handleSelect={this.handleInputFieldSelection}
+                      togglePasswordVisibility={this.togglePasswordVisibility}
+                      passwordVisibility={passwordVisibility}
+                    />
+    const successView = <SuccessScreen username={username} />
+    const display = successfullyCreated ? successView : formView;
     return (
       <form className={`CreateAccountForm ${styles.form}`} onSubmit={this.handleSubmit}>
         <CreateAccountHeader/>
         {/* <Errors validationErrors={validationErrors}/> */}
-        <InputSection
+        {/* <InputSection
           field="Username"
           showRules={selected === 'Username'}
           handleSelect={this.handleInputFieldSelection}
@@ -110,10 +121,40 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
         </button>
         <button type="submit" className={styles.submit_button}>
           Create Account
-        </button>
+        </button> */}
+        {display}
       </form>
     )
   }
 }
 
+const InputArea = ({ selected, hidePass, validationErrors, handleInput, handleSelect, togglePasswordVisibility, passwordVisibility }) => (
+  <>
+    <InputSection
+      field="Username"
+      showRules={selected === 'Username'}
+      handleSelect={handleSelect}
+      handleInput={handleInput}
+      hidePass={hidePass}
+      validationErrors={validationErrors}
+    />
+    <InputSection
+      field="Password"
+      showRules={selected === 'Password'}
+      handleSelect={handleSelect}
+      handleInput={handleInput}
+      hidePass={hidePass}
+      validationErrors={validationErrors}
+    />
+    <button
+      onClick={togglePasswordVisibility}
+      className={styles.hide_show_button}
+    >
+      {passwordVisibility}
+    </button>
+    <button type="submit" className={styles.submit_button}>
+      Create Account
+    </button>
+  </>
+);
 

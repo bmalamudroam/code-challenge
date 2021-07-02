@@ -5,22 +5,11 @@ import styles from 'src/styles/create_account.module.scss';
 import InputSection from './components/InputSection';
 import CreateAccountHeader from './components/CreateAccountHeader';
 import CreateAccountForm from './components/_CreateAccountForm';
+import SuccessScreen from './components/SuccessScreen';
+
 
 
 export default function CreateAccount() {
-  // async function handleSubmit(evt: FormEvent) {
-  //   evt.preventDefault();
-  //   //validate username
-  //   //validate password
-  //   //check for exposed password
-  //   //if none of the above had issue, post new account
-  //   const response = await fetch('/api/create_new_account', {
-  //     method: 'POST',
-  //     body: JSON.stringify({}),
-  //   });
-
-  //   console.log(await response.json());
-  // }
 
   return (
     <>
