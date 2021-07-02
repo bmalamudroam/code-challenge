@@ -17,12 +17,12 @@ const Errors = ({ validationErrors }) => {
   if (passwordErrors.length === 0) {
     passwordErrorList = <div />
   } else {
-    passwordErrorList = <ErrorList errors={passwordErrors} field="password"/>
+    passwordErrorList = <ErrorList errors={passwordErrors} field="Password"/>
   }
   if (usernameErrors.length === 0) {
     usernameErrorList = <div />
   } else {
-    usernameErrorList = <ErrorList errors={usernameErrors} field="username"/>
+    usernameErrorList = <ErrorList errors={usernameErrors} field="Username"/>
   }
   let display = <div />;
   if (usernameErrors.length + passwordErrors.length !== 0) {
@@ -38,26 +38,31 @@ const Errors = ({ validationErrors }) => {
 const ErrorDisplay = ({usernameErrorList, passwordErrorList }) => (
   <section className={styles.errors}>
     <small>
-      <h2>Invalid password or username</h2>
       {usernameErrorList}
       {passwordErrorList}
     </small>
   </section>
 )
 
-const ErrorList = ({ field, errors }) => (
-  <>
-    <h3>
-      Must contain
-    </h3>
-    <ul>
-      {errors.map((error, index) => (
-        <li key={`${field}${index}`}>
-          {error}
-        </li>
-      ))}
-    </ul>
-  </>
-)
+const ErrorList = ({ field, errors }) => {
+  return (
+    <>
+      {/* <h3>
+        Must contain
+      </h3>
+      <ul>
+        {errors.map((error, index) => (
+          <li key={`${field}${index}`}>
+            {error}
+          </li>
+        ))}
+      </ul> */}
+      <small>
+        {field} must contain
+      </small>
+    </>
+  )
+}
+
 
 export default Errors;
