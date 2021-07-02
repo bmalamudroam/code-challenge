@@ -50,18 +50,27 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
 
   async handleSubmit(event: FormEvent) {
     event.preventDefault();
+    // debugger;
     const { username, password} = this.state;
-    const response = await fetch('/api/create_new_account', {
+    let response = await fetch('/api/create_new_account', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
 
-    const { result, errors } = await response.json();
-    if (result) {
-      //success screen
-    } else {
-      this.displayInvalidCriteria(errors);
+    // response = await response.json();
+    const responseData = await response.json();
+    //result is a boolean which indicates if account creation is valid
+    // const { result, exposed } = responseData;
+    if (responseData.exposed) {
+      const alertMessage = 'Your password is exposed';
+      alert(alertMessage);
+      console.log(alertMessage);
     }
+    if (responseData.result) {
+      //success screen
+    }
+    const { errors } = responseData;
+    this.displayInvalidCriteria(errors);
   }
 
   displayInvalidCriteria(errors: ValidationErrors) {

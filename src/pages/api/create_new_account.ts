@@ -14,6 +14,7 @@ interface CreateNewAccountResult {
   //example errors: { Username: ["Length"], Password: ["Symbol"]}
   //this would indicate the username is not a valid length and the password is invalid due to a missing symbol
   errors?: ValidationErrors;
+  exposed?: boolean
 }
 
 export default async function createNewAccount(req: NextApiRequest, res: NextApiResponse<CreateNewAccountResult>) {
@@ -29,13 +30,20 @@ export default async function createNewAccount(req: NextApiRequest, res: NextApi
       password: passwordIssues
     }
   }
-    const response = await fetch('http://localhost:3000/api/password_exposed', {
-      method: 'POST',
-      body: JSON.stringify({ password: accountParams.password }),
-    });
+  let response = await fetch('http://localhost:3000/api/password_exposed', {
+    method: 'POST',
+    body: JSON.stringify({ password: accountParams.password }),
+  });
+  const { result } = await response.json();
+  //result is a boolean which indicates if the given password has been exposed
+  if (result) {
+    validationResult.exposed = true;
+    res.status(200).json(validationResult);
+  } else {
+    validationResult.exposed = false;
+    res.status(200).json(validationResult);
+  }
 
-  console.log((await response.json()));
-  res.status(200).json(validationResult);
 }
 
 //HELPER FUNCTIONS (edit these to adjust validation requirements)
