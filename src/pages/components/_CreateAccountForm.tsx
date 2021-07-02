@@ -75,14 +75,15 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     let passwordVisibility = hidePass ? 'Show' : 'Hide';
     return (
       <form className={`CreateAccountForm ${styles.form}`} onSubmit={this.handleSubmit}>
-        <CreateAccountHeader />
-        <Errors validationErrors={validationErrors}/>
+        <CreateAccountHeader/>
+        {/* <Errors validationErrors={validationErrors}/> */}
         <InputSection
           field="Username"
           showRules={selected === 'Username'}
           handleSelect={this.handleInputFieldSelection}
           handleInput={this.handleInput}
           hidePass={hidePass}
+          validationErrors={validationErrors}
         />
         <InputSection
           field="Password"
@@ -90,6 +91,7 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
           handleSelect={this.handleInputFieldSelection}
           handleInput={this.handleInput}
           hidePass={hidePass}
+          validationErrors={validationErrors}
         />
         <button
           onClick={this.togglePasswordVisibility}
