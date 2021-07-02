@@ -6,12 +6,13 @@ import CreateAccountHeader from './CreateAccountHeader';
 import InputSection from './InputSection';
 import SuccessScreen from './SuccessScreen';
 import { ValidationErrors } from '../api/create_new_account'
+import ExposedWarning from './ExposedWarning';
 
-export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean, validationErrors: ValidationErrors, successfullyCreated: boolean}> {
+export default class CreateAccountForm extends Component<{},{ username: string, password: string, selected: string, hidePass: boolean, validationErrors: ValidationErrors, successfullyCreated: boolean, showExposedWarning: boolean }> {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'TEST',
+      username: '',
       password: '',
       selected: '',
       hidePass: true,
@@ -19,7 +20,8 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
         password: [],
         username: []
       },
-      successfullyCreated: true,
+      successfullyCreated: false,
+      showExposedWarning: false,
     }
     this.setState = this.setState.bind(this);
     this.handleInputFieldSelection = this.handleInputFieldSelection.bind(this);
@@ -49,9 +51,15 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     this.setState({ hidePass });
   }
 
+  toggleShowWarning(event: FormEvent) {
+    event.preventDefault();
+    let { showExposedWarning } = this.state;
+    showExposedWarning = !showExposedWarning;
+    this.setState({ showExposedWarning });
+  }
+
   async handleSubmit(event: FormEvent) {
     event.preventDefault();
-    // debugger;
     const { username, password} = this.state;
     let response = await fetch('/api/create_new_account', {
       method: 'POST',
@@ -62,25 +70,23 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     const responseData = await response.json();
     //result is a boolean which indicates if account creation is valid
     if (responseData.exposed) {
-      const alertMessage = 'Your password is exposed';
-      alert(alertMessage);
-      console.log(alertMessage);
-    }
-    if (responseData.result) {
+      // const alertMessage = 'Your password is exposed';
+      // console.log(alertMessage);
+      this.setState({ showExposedWarning: true});
+    } else if (responseData.result) {
       //success screen
+      this.setState({ successfullyCreated: true });
     }
     const { errors } = responseData;
     this.displayInvalidCriteria(errors);
   }
 
   displayInvalidCriteria(errors: ValidationErrors) {
-    // const passwordErrors: Array<string> = errors.password;
-    // const usernameErrors: Array<string> = errors.username;
     this.setState({ validationErrors: errors });
   }
 
   render () {
-    const { selected, hidePass, validationErrors, successfullyCreated, username } = this.state;
+    const { selected, hidePass, validationErrors, successfullyCreated, username, showExposedWarning } = this.state;
     const passwordVisibility = hidePass ? 'Show' : 'Hide';
     const formView = <InputArea
                       selected={selected}
@@ -91,11 +97,13 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
                       togglePasswordVisibility={this.togglePasswordVisibility}
                       passwordVisibility={passwordVisibility}
                     />
-    const successView = <SuccessScreen username={username} />
+    const successView = <SuccessScreen username={username}/>
     const display = successfullyCreated ? successView : formView;
+    const warning = showExposedWarning ? <ExposedWarning /> : <div />;
     return (
       <form className={`CreateAccountForm ${styles.form}`} onSubmit={this.handleSubmit}>
-        <CreateAccountHeader/>
+        <CreateAccountHeader />
+        {warning}
         {/* <Errors validationErrors={validationErrors}/> */}
         {/* <InputSection
           field="Username"
