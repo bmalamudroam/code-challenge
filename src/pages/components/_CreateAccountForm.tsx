@@ -1,7 +1,5 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
 import styles from 'src/styles/create_account.module.scss';
-
-// import ReactDOM from 'react-dom';
 import CreateAccountHeader from './CreateAccountHeader';
 import InputSection from './InputSection';
 import SuccessScreen from './SuccessScreen';
@@ -28,6 +26,8 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
     this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleWarningBack = this.handleWarningBack.bind(this);
+    this.handleWarningProceedAnyway = this.handleWarningProceedAnyway.bind(this);
   }
 
   handleInputFieldSelection(event: FormEvent) {
@@ -65,24 +65,33 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
-
-    // response = await response.json();
     const responseData = await response.json();
     //result is a boolean which indicates if account creation is valid
-    if (responseData.exposed) {
-      // const alertMessage = 'Your password is exposed';
-      // console.log(alertMessage);
-      this.setState({ showExposedWarning: true});
-    } else if (responseData.result) {
+    if (responseData.result) {
       //success screen
-      this.setState({ successfullyCreated: true });
+      if (responseData.exposed) {
+        this.setState({ showExposedWarning: true }, ()=> {debugger;});
+      } else {
+        this.setState({ successfullyCreated: true });
+      }
+    } else {
+      const { errors } = responseData;
+      this.displayInvalidCriteria(errors);
     }
-    const { errors } = responseData;
-    this.displayInvalidCriteria(errors);
   }
 
   displayInvalidCriteria(errors: ValidationErrors) {
     this.setState({ validationErrors: errors });
+  }
+
+  handleWarningBack(event: FormEvent) {
+    event.preventDefault();
+    this.setState({ showExposedWarning: false });
+  }
+
+  handleWarningProceedAnyway(event: FormEvent) {
+    event.preventDefault();
+    this.setState({ successfullyCreated: true, showExposedWarning: false });
   }
 
   render () {
@@ -99,37 +108,13 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
                     />
     const successView = <SuccessScreen username={username}/>
     const display = successfullyCreated ? successView : formView;
-    const warning = showExposedWarning ? <ExposedWarning /> : <div />;
+    const warning = showExposedWarning ? <ExposedWarning
+      handleBack={this.handleWarningBack} handleProceedAnyway={this.handleWarningProceedAnyway}
+    /> : <div />;
     return (
       <form className={`CreateAccountForm ${styles.form}`} onSubmit={this.handleSubmit}>
         <CreateAccountHeader />
         {warning}
-        {/* <Errors validationErrors={validationErrors}/> */}
-        {/* <InputSection
-          field="Username"
-          showRules={selected === 'Username'}
-          handleSelect={this.handleInputFieldSelection}
-          handleInput={this.handleInput}
-          hidePass={hidePass}
-          validationErrors={validationErrors}
-        />
-        <InputSection
-          field="Password"
-          showRules={selected === 'Password'}
-          handleSelect={this.handleInputFieldSelection}
-          handleInput={this.handleInput}
-          hidePass={hidePass}
-          validationErrors={validationErrors}
-        />
-        <button
-          onClick={this.togglePasswordVisibility}
-          className={styles.hide_show_button}
-        >
-          {passwordVisibility}
-        </button>
-        <button type="submit" className={styles.submit_button}>
-          Create Account
-        </button> */}
         {display}
       </form>
     )
