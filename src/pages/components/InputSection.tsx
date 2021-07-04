@@ -30,24 +30,6 @@ const InputSection = ({ field, showRules, handleSelect, handleInput, hidePass, v
   );
 };
 
-// const RulesBox = ({ field }) => {
-//   // const passwordRules = [
-//   //   'between 20 and 50 characters',
-//   //   'at least 1 Symbol (!,@,#,$,%)',
-//   //   'at least 1 letter (upper or lower case)',
-//   //   'at least 1 number (0-9)'
-//   // ];
-//   // const usernameRules = [
-//   //   'between 10 and 50 characters'
-//   // ];
-//   const rules = (field === 'Username') ? usernameRules : passwordRules;
-//   return (
-//     <div className={styles.rules}>
-//         <RulesList rules={rules} field={field}/>
-//     </div>
-//   )
-// };
-
 const RulesBox = ({ field }) => {
   const usernameMessage = 'Use between 10 and 50 characters';
   const passwordMessage = 'Use between 20 and 50 characters and at least 1 letter, number & symbol';
@@ -58,12 +40,5 @@ const RulesBox = ({ field }) => {
     </small>
   );
 }
-  // <ul>
-  //   {rules.map((rule, index) => (
-  //     <li key={`${field}${index}`}>
-  //       {rule}
-  //     </li>
-  //   ))}
-  // </ul>
 
 export default InputSection;

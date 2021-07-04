@@ -23,7 +23,6 @@ describe('/api/create_new_account', () => {
         password: 'weakpass'
       },
     });
-
     await createNewAccount(req, res);
     await expect(true);
     // expect(res._getStatusCode()).toBe(200);

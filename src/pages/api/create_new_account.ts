@@ -31,16 +31,12 @@ export default async function createNewAccount(req: NextApiRequest, res: NextApi
     }
   }
   let body = JSON.stringify({ password: accountParams.password });
-  // const response = await fetch('/api/password_exposed', {
-  //   method: 'POST',
-  //   body: JSON.stringify({ password: accountParams.password }),
-  // });
-  // const { result } = await response.json();
-  const result = await isPasswordExposed(accountParams.password);
 
+  const { result } = await isPasswordExposed(accountParams.password);
   //result is a boolean which indicates if the given password has been exposed
   if (result) {
     validationResult.exposed = true;
+
     res.status(200).json(validationResult);
   } else {
     validationResult.exposed = false;
@@ -54,7 +50,7 @@ export function isValidUsername(username: string): Array<ValidationCriteria> {
   return (username.length >= 10 && username.length <= 50) ? [] : ["Length"];
 }
 
-//test these functions
+
 //takes in a password to test
 //outputs an array of all incomplete criteria (ex. ['Length', 'Symbol'])
 export function isValidPassword(password: string): Array<ValidationCriteria> {
