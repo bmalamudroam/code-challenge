@@ -60,17 +60,18 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
 
   async handleSubmit(event: FormEvent) {
     event.preventDefault();
-    const { username, password} = this.state;
+    const { username, password } = this.state;
     let response = await fetch('/api/create_new_account', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
-    });
+    })
+      // .catch(alert);
     const responseData = await response.json();
     //result is a boolean which indicates if account creation is valid
     if (responseData.result) {
       //success screen
       if (responseData.exposed) {
-        this.setState({ showExposedWarning: true }, ()=> {debugger;});
+        this.setState({ showExposedWarning: true });
       } else {
         this.setState({ successfullyCreated: true });
       }

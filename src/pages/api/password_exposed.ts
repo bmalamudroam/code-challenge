@@ -15,7 +15,7 @@ interface BooleanResult {
  */
 
 /*
-  To see exposed password warning adjust dummy password below to 'ValidButExposedPassword!1' and try creating account with that password
+  To see exposed password warning adjust dummy password below to 'ValidButExposedPassword!1' and try creating an account with that password
 */
 export default function passwordExposed(req: NextApiRequest, res: NextApiResponse<BooleanResult>) {
   const { password }: PasswordExposedParameters = JSON.parse(req.body);

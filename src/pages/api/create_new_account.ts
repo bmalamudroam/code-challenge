@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-
+import passwordExposed from 'src/pages/api/password_exposed';
 interface CreateNewAccountParameters {
   username: string;
   password: string;
@@ -30,11 +30,14 @@ export default async function createNewAccount(req: NextApiRequest, res: NextApi
       password: passwordIssues
     }
   }
-  let response = await fetch('http://localhost:3000/api/password_exposed', {
-    method: 'POST',
-    body: JSON.stringify({ password: accountParams.password }),
-  });
-  const { result } = await response.json();
+  let body = JSON.stringify({ password: accountParams.password });
+  // const response = await fetch('/api/password_exposed', {
+  //   method: 'POST',
+  //   body: JSON.stringify({ password: accountParams.password }),
+  // });
+  // const { result } = await response.json();
+  const result = await isPasswordExposed(accountParams.password);
+
   //result is a boolean which indicates if the given password has been exposed
   if (result) {
     validationResult.exposed = true;
@@ -47,14 +50,14 @@ export default async function createNewAccount(req: NextApiRequest, res: NextApi
 }
 
 //HELPER FUNCTIONS (edit these to adjust validation requirements)
-function isValidUsername(username: string): Array<ValidationCriteria> {
+export function isValidUsername(username: string): Array<ValidationCriteria> {
   return (username.length >= 10 && username.length <= 50) ? [] : ["Length"];
 }
 
 //test these functions
 //takes in a password to test
 //outputs an array of all incomplete criteria (ex. ['Length', 'Symbol'])
-function isValidPassword(password: string): Array<ValidationCriteria> {
+export function isValidPassword(password: string): Array<ValidationCriteria> {
   let hasSymbol: boolean = false;
   let hasLetter: boolean = false;
   let hasNumber: boolean = false;
@@ -79,8 +82,6 @@ function isValidPassword(password: string): Array<ValidationCriteria> {
   return result;
 }
 
-// async function isExposedPassword()
-
 function isLetter(char: string) {
   const charCode = char.charCodeAt(0);
   return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
@@ -94,4 +95,13 @@ function isNum(char: string) {
 function isSymbol(char: string) {
   const symbols = [`!`, `@`, `#`, `$`, `%`];
   return (symbols.indexOf(char) !== -1);
+}
+
+async function isPasswordExposed(password) {
+  const response = await fetch('http://localhost:3000/api/password_exposed', {
+    method: 'POST',
+    body: JSON.stringify({ password }),
+  });
+  const data =  await response.json();
+  return data;
 }

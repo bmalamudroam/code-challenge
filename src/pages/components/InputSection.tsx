@@ -4,8 +4,8 @@ import styles from 'src/styles/create_account.module.scss';
 const InputSection = ({ field, showRules, handleSelect, handleInput, hidePass, validationErrors }) => {
   let rules = showRules ? <RulesBox field={field}/> : <div />;
   let inputType = (field === 'Username' || hidePass === false) ? "text" : "password";
-  const validUsername = validationErrors.username.length === 0;
-  const validPassword = validationErrors.password.length === 0;
+  const validUsername = validationErrors === undefined ||validationErrors.username.length === 0;
+  const validPassword = validationErrors === undefined ||validationErrors.password.length === 0;
   let textBoxStyle = styles.text_input;
   let inputSectionStyle = styles.valid_input_section;
   if ((field === 'Username' && !validUsername) || (field === 'Password' && !validPassword)) {
