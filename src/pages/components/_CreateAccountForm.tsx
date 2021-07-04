@@ -154,14 +154,14 @@ const InputArea = ({ selected, hidePass, validationErrors, handleInput, handleSe
       hidePass={hidePass}
       validationErrors={validationErrors}
     />
+    <button type="submit" className={styles.submit_button}>
+      Create Account
+    </button>
     <button
       onClick={togglePasswordVisibility}
       className={styles.hide_show_button}
     >
       {passwordVisibility}
-    </button>
-    <button type="submit" className={styles.submit_button}>
-      Create Account
     </button>
   </>
 );
