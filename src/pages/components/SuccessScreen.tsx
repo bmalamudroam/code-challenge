@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import styles from 'src/styles/create_account.module.scss';
+import styles from 'src/styles/success_screen.module.scss';
 
 
 const SuccessScreen = ({ username }) => {

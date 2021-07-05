@@ -1,0 +1,15 @@
+$font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+.success_display {
+  height: 200px;
+  font-family: $font;
+  font-size: large;
+  line-height: 2em;
+  text-align: center;
+}
+
+.username_display {
+  color: green;
+  font-family: $font;
+  font-weight: 800;
+}

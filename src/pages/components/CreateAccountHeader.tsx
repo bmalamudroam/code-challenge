@@ -1,9 +1,4 @@
-import { Component } from 'react';
-import styles from 'src/styles/create_account.module.scss';
-
-
-
-
+import styles from 'src/styles/create_account_header.module.scss';
 
 const CreateAccountHeader = () => (
   <header className={styles.headline}>

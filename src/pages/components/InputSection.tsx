@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import styles from 'src/styles/create_account.module.scss';
+import styles from 'src/styles/input_section.module.scss';
 
 const InputSection = ({ field, showRules, handleSelect, handleInput, hidePass, validationErrors }) => {
   let rules = showRules ? <RulesBox field={field}/> : <div />;
