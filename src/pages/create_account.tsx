@@ -1,11 +1,6 @@
 import Head from 'next/head';
-import { FormEvent } from 'react';
-// import Logo from 'images/wealthfrontlogo.png';
 import styles from 'src/styles/create_account.module.scss';
-import InputSection from './components/InputSection';
-import CreateAccountHeader from './components/CreateAccountHeader';
-import CreateAccountForm from './components/_CreateAccountForm';
-import SuccessScreen from './components/SuccessScreen';
+import CreateAccountForm from './components/CreateAccountForm';
 
 
 

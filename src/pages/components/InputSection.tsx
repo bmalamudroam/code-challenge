@@ -32,7 +32,7 @@ const InputSection = ({ field, showRules, handleSelect, handleInput, hidePass, v
 
 const RulesBox = ({ field }) => {
   const usernameMessage = 'Use between 10 and 50 characters';
-  const passwordMessage = 'Use between 20 and 50 characters and at least 1 letter, number & symbol';
+  const passwordMessage = 'Use between 20 and 50 characters and at least 1 letter, number & symbol (!, @, #, $, %)';
   const message: string = (field === 'Username') ? usernameMessage : passwordMessage;
   return (
     <small className={styles.rules}>

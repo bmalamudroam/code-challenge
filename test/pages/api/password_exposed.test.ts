@@ -30,7 +30,6 @@ describe('/api/password_exposed', () => {
         password: 'others',
       },
     });
-
     await passwordExposed(req, res);
 
     expect(res._getStatusCode()).toBe(200);

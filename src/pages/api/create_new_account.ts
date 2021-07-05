@@ -36,7 +36,6 @@ export default async function createNewAccount(req: NextApiRequest, res: NextApi
   //result is a boolean which indicates if the given password has been exposed
   if (result) {
     validationResult.exposed = true;
-
     res.status(200).json(validationResult);
   } else {
     validationResult.exposed = false;

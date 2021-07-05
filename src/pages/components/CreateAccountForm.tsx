@@ -65,11 +65,9 @@ export default class CreateAccountForm extends Component<{},{ username: string, 
       method: 'POST',
       body: JSON.stringify({ username, password }),
     })
-      // .catch(alert);
     const responseData = await response.json();
     //result is a boolean which indicates if account creation is valid
     if (responseData.result) {
-      //success screen
       if (responseData.exposed) {
         this.setState({ showExposedWarning: true });
       } else {
